@@ -1,5 +1,5 @@
 {
-  "name": "discord-mirror-bot",
+  "name": "discord-channel-mirror-bot",
   "description": "discord channel mirror bot for heroku",
   "repository": "https://github.com/akam1o/discord-mirror-bot",
   "keywords": ["python", "discord", "bot", "heroku"]
