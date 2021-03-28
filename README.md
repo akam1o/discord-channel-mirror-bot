@@ -1,36 +1,38 @@
-# discordpy-startup
+# discord-mirror-bot
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-- Herokuでdiscord.pyを始めるテンプレートです。
-- Use Template からご利用ください。
-- 使い方はこちら： [Discord Bot 最速チュートリアル【Python&Heroku&GitHub】 - Qiita](https://qiita.com/1ntegrale9/items/aa4b373e8895273875a8)
+## Detail
+Discord channel mirror bot for heroku.
 
-## 各種ファイル情報
+## how to deploy
+### 1. Fork from this repository
 
-### discordbot.py
-PythonによるDiscordBotのアプリケーションファイルです。
+### 2. Register on heroku
 
-### requirements.txt
-使用しているPythonのライブラリ情報の設定ファイルです。
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-### Procfile
-Herokuでのプロセス実行コマンドの設定ファイルです。
+#### 2.1 Create new app
 
-### runtime.txt
-Herokuでの実行環境の設定ファイルです。
+<img width="203" alt="heroku create new app" src="https://user-images.githubusercontent.com/5158577/112741842-f531ac00-8fc3-11eb-8a70-6c6b9da42e08.png">
 
-### app.json
-Herokuデプロイボタンの設定ファイルです。
+#### 2.2 Connect to your github repository
 
-### .github/workflows/flake8.yaml
-GitHub Actions による自動構文チェックの設定ファイルです。
+<img width="1234" alt="Connect to your github repository" src="https://user-images.githubusercontent.com/5158577/112741849-07134f00-8fc4-11eb-856d-2cb350f2d3b0.png">
 
-### .gitignore
-Git管理が不要なファイル/ディレクトリの設定ファイルです。
+#### 2.3 Set config vars of heroku app
 
-### LICENSE
-このリポジトリのコードの権利情報です。MITライセンスの範囲でご自由にご利用ください。
+Set the following config:
 
-### README.md
-このドキュメントです。
+* SOURCE_CHANNEL_ID
+* SOURCE_DISCORD_BOT_TOKEN
+* TARGET_CHANNEL_ID
+* TARGET_DISCORD_BOT_TOKEN
+
+<img width="1270" alt="Set config vars of heroku app" src="https://user-images.githubusercontent.com/5158577/112741858-1a261f00-8fc4-11eb-8a8d-bceacc33d76f.png">
+
+#### 2.4 Deploy
+
+#### 2.5 Set Free dynos
+
+<img width="1231" alt="Set Free dynos" src="https://user-images.githubusercontent.com/5158577/112741867-31fda300-8fc4-11eb-883b-7dbae52164db.png">
