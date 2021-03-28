@@ -1,4 +1,4 @@
-# discord-mirror-bot
+# discord-channel-mirror-bot
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
