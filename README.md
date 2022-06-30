@@ -33,6 +33,8 @@ Set the following config:
 
 #### 2.4 Deploy
 
-#### 2.5 Set Free dynos
+#### 2.5 Set your dynos
+
+##### e.g. Set Free dynos
 
 <img width="1231" alt="Set Free dynos" src="https://user-images.githubusercontent.com/5158577/112741867-31fda300-8fc4-11eb-883b-7dbae52164db.png">
