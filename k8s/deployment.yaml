@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discord-mirror
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discord-mirror
+  template:
+    metadata:
+      labels:
+        app: discord-mirror
+    spec:
+      containers:
+        - name: bot
+          image: ghcr.io/akam1o/discord-channel-mirror-bot:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: discord-mirror-env
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi

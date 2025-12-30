@@ -1,40 +1,63 @@
 # discord-channel-mirror-bot
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
-
 ## Detail
-Discord channel mirror bot for heroku.
+Discord channel mirror bot.
 
-## how to deploy
-### 1. Fork from this repository
+## Docker
+This bot is a long-running process (it keeps a connection to Discord Gateway), so running it as a container is a good fit.
 
-### 2. Register on heroku
+### Discord bot settings (message content intent)
+This bot reads message text, so you must enable "MESSAGE CONTENT INTENT" for the source bot in Discord Developer Portal.
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+### Run locally with Docker
+```bash
+docker build -t discord-channel-mirror-bot .
+docker run --rm \
+  -e SOURCE_CHANNEL_ID=... \
+  -e SOURCE_DISCORD_BOT_TOKEN=... \
+  -e TARGET_CHANNEL_ID=... \
+  -e TARGET_DISCORD_BOT_TOKEN=... \
+  discord-channel-mirror-bot
+```
 
-#### 2.1 Create new app
+### Run with Docker Compose
+1. Copy `.env.example` to `.env` and fill in values.
+2. Start:
+```bash
+docker compose up -d
+docker compose logs -f
+```
 
-<img width="203" alt="heroku create new app" src="https://user-images.githubusercontent.com/5158577/112741842-f531ac00-8fc3-11eb-8a70-6c6b9da42e08.png">
+## Deploy to Kubernetes
+1. `k8s/deployment.yaml` uses `ghcr.io/akam1o/discord-channel-mirror-bot:latest` by default (edit if you want a different tag).
+2. Fill `k8s/secret.yaml` values.
+3. Apply:
+```bash
+kubectl apply -f k8s/secret.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl rollout status deploy/discord-mirror
+kubectl logs -l app=discord-mirror -f
+```
 
-#### 2.2 Connect to your github repository
+## Deploy to Google Compute Engine (GCE) with a container VM
+You can run the Docker image on a Container-Optimized OS VM.
 
-<img width="1234" alt="Connect to your github repository" src="https://user-images.githubusercontent.com/5158577/112741849-07134f00-8fc4-11eb-856d-2cb350f2d3b0.png">
+1. Create a VM from a container image (example uses a free-tier-eligible machine type/region; adjust as needed):
+```bash
+gcloud compute instances create-with-container discord-mirror \
+  --zone=us-central1-a \
+  --machine-type=e2-micro \
+  --boot-disk-size=30GB \
+  --boot-disk-type=pd-standard \
+  --container-image=ghcr.io/akam1o/discord-channel-mirror-bot:latest \
+  --container-restart-policy=always \
+  --container-env=SOURCE_CHANNEL_ID=... \
+  --container-env=SOURCE_DISCORD_BOT_TOKEN=... \
+  --container-env=TARGET_CHANNEL_ID=... \
+  --container-env=TARGET_DISCORD_BOT_TOKEN=...
+```
 
-#### 2.3 Set config vars of heroku app
-
-Set the following config:
-
-* SOURCE_CHANNEL_ID
-* SOURCE_DISCORD_BOT_TOKEN
-* TARGET_CHANNEL_ID
-* TARGET_DISCORD_BOT_TOKEN
-
-<img width="1270" alt="Set config vars of heroku app" src="https://user-images.githubusercontent.com/5158577/112741858-1a261f00-8fc4-11eb-8a8d-bceacc33d76f.png">
-
-#### 2.4 Deploy
-
-#### 2.5 Set your dynos
-
-##### e.g. Set Free dynos
-
-<img width="1231" alt="Set Free dynos" src="https://user-images.githubusercontent.com/5158577/112741867-31fda300-8fc4-11eb-883b-7dbae52164db.png">
+2. Check logs:
+```bash
+gcloud compute instances tail-serial-port-output discord-mirror --zone=us-central1-a
+```
