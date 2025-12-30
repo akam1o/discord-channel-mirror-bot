@@ -1,0 +1,9 @@
+services:
+  discord-mirror:
+    image: ${IMAGE:-ghcr.io/akam1o/discord-channel-mirror-bot:latest}
+    restart: unless-stopped
+    environment:
+      SOURCE_CHANNEL_ID: ${SOURCE_CHANNEL_ID}
+      SOURCE_DISCORD_BOT_TOKEN: ${SOURCE_DISCORD_BOT_TOKEN}
+      TARGET_CHANNEL_ID: ${TARGET_CHANNEL_ID}
+      TARGET_DISCORD_BOT_TOKEN: ${TARGET_DISCORD_BOT_TOKEN}
